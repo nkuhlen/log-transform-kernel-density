@@ -1,0 +1,22 @@
+{    
+    "density_0": {
+        "distribution": "burr3",
+        "alpha": 1,
+        "c_1": 4,
+        "d_1": 1,
+        "beta": 0,
+        "c_2": 8,
+        "d_2": 500
+    },
+
+    "density_1": {
+        "distribution": "burr3",
+        "alpha": 0.7,
+        "c_1": 4,
+        "d_1": 1,
+        "beta": 0.3,
+        "c_2": 8,
+        "d_2": 500
+    }
+
+}

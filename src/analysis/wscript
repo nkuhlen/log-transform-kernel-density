@@ -1,0 +1,88 @@
+#! python
+
+
+def build(ctx):
+
+    ctx(
+        features='run_py_script',
+        source='density_estimation_unweighted.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'data_pwt71.pickle'),
+            ctx.path_to(ctx, 'OUT_DATA', 'years_pwt.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_ANALYSIS', 'estimated_densities_unweighted.json'
+            )
+        ],
+        name='density_estimation_pwt71_unweighted'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='density_estimation_weighted.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'data_pwt71.pickle'),
+            ctx.path_to(ctx, 'OUT_DATA', 'years_pwt.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_ANALYSIS', 'estimated_densities_weighted.json'
+            )
+        ],
+        name='density_estimation_pwt71_weighted'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='density_estimation_log.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'data_pwt71.pickle'),
+            ctx.path_to(ctx, 'OUT_DATA', 'years_pwt.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_ANALYSIS', 'estimated_densities_log.json'
+            )
+        ],
+        name='density_estimation_log'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='miae_dagum.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'simulation_data.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'draws.json'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'densities.json'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'samples.json'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_ANALYSIS', 'miae_dagum.pickle'
+            )
+        ],
+        name='miae_dagum'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='miae_dagum_mixture.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'simulation_data.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'draws.json'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'densities.json'),
+            ctx.path_to(ctx, 'IN_MODEL_SPECS', 'samples.json'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_ANALYSIS', 'miae_dagum_mixture.pickle'
+            )
+        ],
+        name='miae_dagum_mixture'
+    )

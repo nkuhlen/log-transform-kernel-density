@@ -1,0 +1,134 @@
+#! python
+
+
+def build(ctx):
+
+    ctx(
+        features='run_py_script',
+        source='fig_simulation_true_densities.py',
+        deps=ctx.path_to(ctx, 'IN_MODEL_SPECS', 'densities.json'),
+        name='simulation_data_true_densities_plot'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='fig_world_income_distribution_unweighted.py',
+        deps=[ctx.path_to(
+            ctx, 'OUT_ANALYSIS', 'estimated_densities_unweighted.json'
+        )],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_unweighted_1970.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_unweighted_1980.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_unweighted_1990.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_unweighted_2000.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_unweighted_2010.pdf'
+            ),
+        ],
+        name='figure_world_income_distribution_unweighted'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='fig_world_income_distribution_weighted.py',
+        deps=[ctx.path_to(
+            ctx, 'OUT_ANALYSIS', 'estimated_densities_weighted.json'
+        )],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_weighted_1970.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_weighted_1980.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_weighted_1990.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_weighted_2000.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_weighted_2010.pdf'
+            ),
+        ],
+        name='figure_world_income_distribution_weighted'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='fig_world_income_distribution_log.py',
+        deps=[ctx.path_to(
+            ctx, 'OUT_ANALYSIS', 'estimated_densities_log.json'
+        )],
+        target=[
+            ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_log_1970.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_log_1980.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_log_1990.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_log_2000.pdf'
+            ), ctx.path_to(
+                ctx, 'OUT_FIGURES',
+                'fig_world_income_distribution_log_2010.pdf'
+            ),
+        ],
+        name='figure_world_income_distribution_log'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='fig_comparison_gdp.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_DATA', 'data_pwt71.pickle'),
+            ctx.path_to(ctx, 'OUT_DATA', 'years_pwt.pickle'),
+            ctx.path_to(ctx, 'IN_MODEL_CODE', 'kde.py')
+        ],
+        target=[
+            ctx.path_to(ctx, 'OUT_FIGURES', 'fig_comparison_gdp_rgdpwok.pdf'),
+            ctx.path_to(
+                ctx, 'OUT_FIGURES', 'fig_comparison_gdp_weighted_rgdpwok.pdf'
+            )
+        ],
+        name='comparison_gdp'
+    )
+
+    ctx(
+        features='run_r_script',
+        source='fig_map_included_countries.r',
+        deps=ctx.path_to(
+            ctx, 'OUT_DATA', 'countries.csv'
+        ),
+        target=ctx.path_to(
+            ctx, 'OUT_FIGURES', 'fig_map_included_countries.pdf'
+        ),
+        name='fig_map_included_countries'
+    )
+
+    ctx(
+        features='run_py_script',
+        source='tab_miae.py',
+        deps=[
+            ctx.path_to(ctx, 'OUT_ANALYSIS', 'miae_dagum.pickle'),
+            ctx.path_to(ctx, 'OUT_ANALYSIS', 'miae_dagum_mixture.pickle')
+        ],
+        target=ctx.path_to(
+            ctx, 'OUT_TABLES', 'miae.tex'
+        ),
+        name='table_miae'
+    )
